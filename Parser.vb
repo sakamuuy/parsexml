@@ -35,7 +35,7 @@ Module Parser
         If i = 0 Then 
           categoryList(0) = atMostOne(categoryHt, name, node)
 
-        ElseIf i > 0 And categoryList(i-1) IsNot Nothing = True Then
+        ElseIf i > 0 And categoryList(i-1) IsNot Nothing Then
           categoryList(i) = atMostOneFromParent(categoryList(i-1), name, node)
 
         End If
