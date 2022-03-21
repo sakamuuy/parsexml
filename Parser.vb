@@ -11,19 +11,21 @@ Module Parser
 
   Function Xml2Category(doc As XmlDocument) As List(Of Category) 
     Dim root As XmlNode = doc.DocumentElement
-    Dim facets As XmlNode = root.SelectNodes("facets")(0)
+    Dim nodeList As XmlNode = root.SelectNodes("//category")(0)
     Dim categoryHt As Hashtable  = New Hashtable
     Dim ret = New List(Of Category)()
 
-    If isNothing(facets) Then
-      Console.Error.WriteLine("facets is not declared.")
+    If isNothing(nodeList) Then
+      Console.Error.WriteLine("nodeList is not declared.")
+      return ret
     End If
 
-    If facets.HasChildNodes <> True Then
-      Console.Error.WriteLine("facets has no children.")
+    If nodeList.HasChildNodes <> True Then
+      Console.Error.WriteLine("nodeList has no children.")
+      return ret
     End If
     
-    For Each node As XmlElement In facets
+    For Each node As XmlElement In nodeList
       Dim nameList As String() = node.GetAttribute("name").split("|")
       Dim category1 As Category = Nothing
       Dim category2 As Category = Nothing
