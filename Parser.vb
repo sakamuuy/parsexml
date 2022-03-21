@@ -27,21 +27,16 @@ Module Parser
     
     For Each node As XmlElement In nodeList
       Dim nameList As String() = node.GetAttribute("name").split("|")
-      Dim category1 As Category = Nothing
-      Dim category2 As Category = Nothing
-      Dim category3 As Category = Nothing
+      Dim categoryList(nameList.length) As Category
 
       For i As Integer = 0 To nameList.Length - 1
         Dim name As String = nameList(i)
 
         If i = 0 Then 
-          category1 = atMostOne(categoryHt, name, node)
+          categoryList(0) = atMostOne(categoryHt, name, node)
 
-        ElseIf i = 1 And category1 IsNot Nothing = True Then
-          category2 = atMostOneFromParent(category1, name, node)
-
-        ElseIf i = 2 And category1 IsNot Nothing = True And category2 IsNot Nothing = True Then
-          category3 = atMostOneFromParent(category2, name, node)
+        ElseIf i > 0 And categoryList(i-1) IsNot Nothing = True Then
+          categoryList(i) = atMostOneFromParent(categoryList(i-1), name, node)
 
         End If
       Next
